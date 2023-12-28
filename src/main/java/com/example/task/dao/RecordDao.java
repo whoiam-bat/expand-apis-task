@@ -24,7 +24,7 @@ public class RecordDao {
         String query = String.format("CREATE TABLE IF NOT EXISTS `%s` (`id` int PRIMARY KEY AUTO_INCREMENT NOT NULL, %s)",
                 tableName,
                 String.join(", ", columns.stream()
-                        .map(column -> "`" + column + "` varchar(255)")
+                        .map(column -> "`" + column + "` varchar(255) NOT NULL")
                         .toList()
                 )
         );
