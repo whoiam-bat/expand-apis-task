@@ -13,13 +13,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class RequestRecord {
 
-    private LocalDate entryDate;
+    private String entryDate;
 
     private String itemCode;
 
     private String itemName;
 
-    private int itemQuantity;
+    private String itemQuantity;
 
     private String status;
 
