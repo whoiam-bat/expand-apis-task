@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +25,13 @@ import java.util.Map;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    protected ResponseEntity<Object> handleUserAlreadyExists(SQLIntegrityConstraintViolationException ex) {
+        ExceptionResponse response = new ExceptionResponse(HttpStatus.CONFLICT,
+                Map.of(ex.getClass().getSimpleName(), ex.getLocalizedMessage()));
+
+        return buildResponseEntity(response);
+    }
 
     @ExceptionHandler(EntityNotFound.class)
     protected ResponseEntity<Object> handleEntityNotFound(EntityNotFound ex) {
@@ -34,7 +42,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(DbException.class)
-    protected ResponseEntity<Object> handleDbException(EntityNotFound ex) {
+    protected ResponseEntity<Object> handleDbException(DbException ex) {
         ExceptionResponse response = new ExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR,
                 Map.of(ex.getClass().getSimpleName(), ex.getLocalizedMessage()));
 
