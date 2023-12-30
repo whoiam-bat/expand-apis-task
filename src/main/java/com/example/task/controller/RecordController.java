@@ -26,7 +26,7 @@ public class RecordController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<RequestRecord>> findAll(@RequestBody Request request) {
+    public ResponseEntity<List<RequestRecord>> findAll() {
         return ResponseEntity.ok(recordService.findAll());
     }
 }
